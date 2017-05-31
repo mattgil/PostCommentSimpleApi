@@ -8,7 +8,6 @@
 
 namespace AppBundle\Entity;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Post
@@ -79,6 +78,4 @@ class Post
     {
         return $this->comments;
     }
-
-
 }

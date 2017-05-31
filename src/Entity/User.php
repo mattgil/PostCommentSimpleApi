@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-
 class User
 {
     private $id;
@@ -67,6 +66,4 @@ class User
     {
         return $this->password;
     }
-
-
 }

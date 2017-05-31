@@ -8,7 +8,6 @@
 
 namespace AppBundle\Entity;
 
-
 class Comment
 {
     private $id;
@@ -66,6 +65,4 @@ class Comment
     {
         return $this->date;
     }
-
-
 }
