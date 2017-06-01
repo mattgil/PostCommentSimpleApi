@@ -34,13 +34,17 @@ class UserController extends Controller
         $registerUserFrom->handleRequest($request);
 
         if ($registerUserFrom->isValid()) {
+            $em = $this->get('doctrine.orm.entity_manager');
+            if( $em->getRepository('AppBundle:User')->findBy(['email' => $registerUserDTO->email]) ){
+                return new JsonResponse(['message' => 'email was used'],Response::HTTP_BAD_REQUEST);
+            }
             $user = new User(
                 $registerUserDTO->email,
                 $registerUserDTO->name,
                 $registerUserDTO->surname,
                 $registerUserDTO->password
             );
-            $em = $this->get('doctrine.orm.entity_manager');
+
             $em->persist($user);
             $em->flush();
             return new JsonResponse(['message' => 'user successfully created'], Response::HTTP_CREATED);
