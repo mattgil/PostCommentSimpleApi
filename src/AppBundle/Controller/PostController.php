@@ -9,8 +9,11 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\DTO\CommentDTO;
 use AppBundle\DTO\PostDTO;
+use AppBundle\Entity\Comment;
 use AppBundle\Entity\Post;
+use AppBundle\Form\CommentForm;
 use AppBundle\Form\PostForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -54,6 +57,29 @@ class PostController extends Controller
             return new JsonResponse(['message' => 'Post created'], Response::HTTP_CREATED);
         } else {
             return $this->prepareValidationErrorResponse($postForm);
+        }
+    }
+
+    /**
+     * @Route("/posts/{post_id}/comment", requirements={"post_id"="\d+"}, methods={"POST", "PUT"})
+     */
+    public function createCommentAction(Request $request, $post_id, UserInterface $user)
+    {
+        $post = $this->getDoctrine()->getRepository('AppBundle:Post')->find($post_id);
+        if(!$post){
+            return new JsonResponse(['message' => 'Post does not exists'], Response::HTTP_NOT_FOUND);
+        }
+        $commentDTO = new CommentDTO();
+        $commentFrom = $this->createForm(CommentForm::class,$commentDTO);
+        $commentFrom->handleRequest($request);
+        if( $commentFrom->isValid() ){
+            $comment = new Comment($post,$user,$commentDTO->comment);
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($comment);
+            $em->flush();
+            return new JsonResponse(['message'=> 'Comment created']);
+        } else {
+            return $this->prepareValidationErrorResponse($commentFrom);
         }
     }
 }
