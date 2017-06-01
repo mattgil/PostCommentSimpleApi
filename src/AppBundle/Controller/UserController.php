@@ -8,7 +8,6 @@
 
 namespace AppBundle\Controller;
 
-
 use AppBundle\DTO\RegisterUserDTO;
 use AppBundle\Entity\User;
 use AppBundle\Form\RegisterUserForm;
@@ -22,7 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UserController extends Controller
 {
-
     use ValidationErrorResponseTrait;
 
     /**
@@ -31,10 +29,10 @@ class UserController extends Controller
     public function registerUserAction(Request $request)
     {
         $registerUserDTO = new RegisterUserDTO();
-        $registerUserFrom = $this->createForm(RegisterUserForm::class,$registerUserDTO);
+        $registerUserFrom = $this->createForm(RegisterUserForm::class, $registerUserDTO);
         $registerUserFrom->handleRequest($request);
 
-        if ($registerUserFrom->isValid() ){
+        if ($registerUserFrom->isValid()) {
             $user = new User(
                 $registerUserDTO->email,
                 $registerUserDTO->name,
@@ -49,5 +47,4 @@ class UserController extends Controller
             return $this->prepareValidationErrorResponse($registerUserFrom);
         }
     }
-
 }

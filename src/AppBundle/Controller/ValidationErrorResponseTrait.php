@@ -8,7 +8,6 @@
 
 namespace AppBundle\Controller;
 
-
 use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,7 +36,6 @@ trait ValidationErrorResponseTrait
         $errorsArray = [];
         $errors = $form->getErrors();
         foreach ($errors as $error) {
-
             $errorsArray[] = $error->getMessage();
         }
 

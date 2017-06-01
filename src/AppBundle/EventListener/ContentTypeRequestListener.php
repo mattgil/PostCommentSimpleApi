@@ -8,27 +8,24 @@
 
 namespace AppBundle\EventListener;
 
-
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
-
 class ContentTypeRequestListener
 {
-    public function onKernelRequest( GetResponseEvent $event )
+    public function onKernelRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
-        if( 'json' ===  $request->getContentType() ){
-           $data = json_decode($request->getContent(),true);
-           if( !$data ){
-               $event->setResponse(
+        if ('json' ===  $request->getContentType()) {
+            $data = json_decode($request->getContent(), true);
+            if (!$data) {
+                $event->setResponse(
                    new JsonResponse(['message' => 'non valid json format'], 400)
                );
-               return;
-           }
-        $request->request = new ParameterBag($data);
+                return;
+            }
+            $request->request = new ParameterBag($data);
         }
-
     }
 }
