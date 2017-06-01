@@ -26,6 +26,15 @@ class PostController extends Controller
     use ValidationErrorResponseTrait;
 
     /**
+     * @Route("/posts", methods={"GET"})
+     */
+    public function getPostsAction()
+    {
+        $posts = $this->getDoctrine()->getRepository('AppBundle:Post')->findPostToListSortByDateDESC();
+        return new JsonResponse(['posts' => $posts]);
+    }
+
+    /**
      * @Route("/posts", methods={"PUT", "POST"})
      */
     public function createPostsAction( Request $request, UserInterface $user )
