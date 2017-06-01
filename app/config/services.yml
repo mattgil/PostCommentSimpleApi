@@ -33,3 +33,7 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    app.event_listener.content_type_request_listener:
+        class: AppBundle\EventListener\ContentTypeRequestListener
+        tags:
+          - { name: kernel.event_listener, event: kernel.request }
