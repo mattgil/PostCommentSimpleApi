@@ -9,17 +9,40 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="post")
+ */
 class Post
 {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
     private $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
     private $user;
 
+    /**
+     * @ORM\Column(type="string",length=32)
+     */
     private $title;
 
+    /**
+     * @ORM\Column(type="string")
+     */
     private $description;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
     private $date;
 
     private $comments;
