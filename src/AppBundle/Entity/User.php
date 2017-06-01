@@ -2,16 +2,41 @@
 
 namespace AppBundle\Entity;
 
-class User
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="user")
+ */
+class User implements UserInterface
 {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
     private $id;
 
+    /**
+     * @ORM\Column(type="string", unique=true)
+     */
     private $email;
 
+    /**
+     * @ORM\Column(type="string")
+     */
     private $name;
 
+    /**
+     * @ORM\Column(type="string")
+     */
     private $surname;
 
+    /**
+     * @ORM\Column(type="string")
+     */
     private $password;
 
     /**
@@ -66,4 +91,30 @@ class User
     {
         return $this->password;
     }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    public function getSalt()
+    {
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+
 }
