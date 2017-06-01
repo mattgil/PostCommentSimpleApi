@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/user")
@@ -42,7 +43,7 @@ class UserController extends Controller
             $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($user);
             $em->flush();
-            return new JsonResponse(['message' => 'user successfully created']);
+            return new JsonResponse(['message' => 'user successfully created'], Response::HTTP_CREATED);
         } else {
             return $this->prepareValidationErrorResponse($registerUserFrom);
         }

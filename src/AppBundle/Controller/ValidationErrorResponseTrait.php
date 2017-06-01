@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 trait ValidationErrorResponseTrait
 {
@@ -24,7 +25,7 @@ trait ValidationErrorResponseTrait
         return new JsonResponse([
             'message' => 'validationErrors',
             'errors' => $errorsArray
-        ], 400);
+        ], Response::HTTP_BAD_REQUEST);
     }
 
     /**
