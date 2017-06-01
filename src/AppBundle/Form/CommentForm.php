@@ -8,7 +8,6 @@
 
 namespace AppBundle\Form;
 
-
 use AppBundle\DTO\CommentDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -5,7 +5,6 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
@@ -115,6 +114,4 @@ class User implements UserInterface
     public function eraseCredentials()
     {
     }
-
-
 }

@@ -8,7 +8,6 @@
 
 namespace AppBundle\Security;
 
-
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,10 +29,10 @@ class Authenticator extends AbstractGuardAuthenticator
 
     public function getCredentials(Request $request)
     {
-        if( !$credentials = $request->headers->get('X-AUTH') ){
+        if (!$credentials = $request->headers->get('X-AUTH')) {
             return null;
         }
-        list($email, $password) = explode(":",$credentials);
+        list($email, $password) = explode(":", $credentials);
         return [
             'email' => $email,
             'password' => $password
@@ -42,7 +41,7 @@ class Authenticator extends AbstractGuardAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        if( !$credentials || !$credentials['email'] || !$credentials['password'] ){
+        if (!$credentials || !$credentials['email'] || !$credentials['password']) {
             return null;
         }
 
@@ -51,7 +50,7 @@ class Authenticator extends AbstractGuardAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return password_verify($credentials['password'],$user->getPassword());
+        return password_verify($credentials['password'], $user->getPassword());
     }
 
 
@@ -72,5 +71,4 @@ class Authenticator extends AbstractGuardAuthenticator
     {
         return false;
     }
-
 }

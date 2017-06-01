@@ -8,7 +8,6 @@
 
 namespace AppBundle\Repository;
 
-
 use AppBundle\Entity\Post;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
@@ -19,11 +18,11 @@ class PostRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('p');
         $qb->addSelect('u')
-            ->join('p.user', 'u',Join::WITH)
+            ->join('p.user', 'u', Join::WITH)
             ->orderBy('p.date', "DESC");
 
-        return array_map(function (Post $post){
-                            return [
+        return array_map(function (Post $post) {
+            return [
                                 'title' => $post->getTitle(),
                                 'description' => $post->getDescription(),
                                 'date' => $post->getDate()->format('Y-m-d H:i:s'),
@@ -32,6 +31,6 @@ class PostRepository extends EntityRepository
                                     'surname' => $post->getUser()->getSurname()
                                 ]
                             ];
-                }, $qb->getQuery()->getResult() );
+        }, $qb->getQuery()->getResult());
     }
 }
