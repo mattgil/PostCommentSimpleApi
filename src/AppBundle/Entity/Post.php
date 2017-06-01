@@ -100,7 +100,7 @@ class Post
     /**
      * @return Comment[]
      */
-    public function getComments(): ArrayCollection
+    public function getComments()
     {
         return $this->comments;
     }

@@ -31,7 +31,22 @@ class PostController extends Controller
     public function getPostsAction()
     {
         $posts = $this->getDoctrine()->getRepository('AppBundle:Post')->findPostToListSortByDateDESC();
-        return new JsonResponse(['posts' => $posts]);
+
+            return new JsonResponse(['posts' => $posts]);
+
+    }
+
+    /**
+     * @Route("/posts/{post_id}", requirements={"post_id"="\d+"}, methods={"GET"})
+     */
+    public function getPostDetailAction($post_id)
+    {
+        $post = $this->getDoctrine()->getRepository("AppBundle:Post")->findPostDetails($post_id);
+        if( !$post ){
+            return new JsonResponse(['message'=> 'post does not exists'], Response::HTTP_NOT_FOUND);
+        } else {
+            return new JsonResponse(['post' => $post]);
+        }
     }
 
     /**
