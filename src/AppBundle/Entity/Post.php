@@ -45,6 +45,9 @@ class Post
      */
     private $date;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="post")
+     */
     private $comments;
 
     /**
