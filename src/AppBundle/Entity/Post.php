@@ -46,7 +46,7 @@ class Post
     private $date;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="post", cascade={"remove"})
      */
     private $comments;
 

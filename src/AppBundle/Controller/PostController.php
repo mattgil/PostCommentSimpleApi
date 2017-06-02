@@ -73,6 +73,24 @@ class PostController extends Controller
     }
 
     /**
+     * @Route("/posts/{post_id}", requirements={"post_id"="\d+"}, methods={"DELETE"})
+     */
+    public function deletePost($post_id, UserInterface $user)
+    {
+        $post = $this->getDoctrine()->getRepository("AppBundle:Post")->find($post_id);
+        if(!$post){
+            return new JsonResponse(['message'=> 'post does not exists'], Response::HTTP_NOT_FOUND);
+        }
+        if( $post->getUser() !== $user ){
+            return new JsonResponse(['message'=> 'can not delete post'], Response::HTTP_UNAUTHORIZED);
+        }
+        $em = $this->get('doctrine.orm.entity_manager');
+        $em->remove($post);
+        $em->flush();
+        return new JsonResponse(['message'=> 'post was deleted']);
+    }
+
+    /**
      * @Route("/posts/{post_id}/comment", requirements={"post_id"="\d+"}, methods={"POST", "PUT"})
      */
     public function createCommentAction(Request $request, $post_id, UserInterface $user)
