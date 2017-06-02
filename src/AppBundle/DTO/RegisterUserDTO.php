@@ -26,6 +26,7 @@ class RegisterUserDTO
     /**
      * @Assert\NotBlank(message="password can not be blank")
      * @Assert\Length(min="8", minMessage="password is too short, minimum is 8 characters")
+     * @Assert\Regex(pattern="/^:/", message="password can not contain : colon character" )
      */
     public $password;
 
