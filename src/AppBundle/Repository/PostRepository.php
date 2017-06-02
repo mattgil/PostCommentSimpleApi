@@ -32,18 +32,18 @@ class PostRepository extends EntityRepository
         $qb->join('p.user', 'u', Join::WITH)
             ->leftJoin('p.comments', 'c', JOIN::WITH)
             ->leftJoin('c.user', 'cu', JOIN::WITH)
-            ->where($qb->expr()->eq('p.id',':post_id'));
-        $qb->setParameter('post_id',$post_id);
+            ->where($qb->expr()->eq('p.id', ':post_id'));
+        $qb->setParameter('post_id', $post_id);
 
         try {
             $post = $qb->getQuery()->getSingleResult();
             $postView = $this->preparePostListView($post);
-            if( count($post->getComments()) ){
+            if (count($post->getComments())) {
                 $commentsView = array_map([$this, 'prepareCommentListView'], $post->getComments()->toArray());
                 $postView['comments'] = $commentsView;
             }
             return $postView;
-        } catch (NoResultException $exception){
+        } catch (NoResultException $exception) {
             return null;
         }
     }
@@ -64,7 +64,7 @@ class PostRepository extends EntityRepository
 
     private function prepareCommentListView(Comment $comment)
     {
-            return [
+        return [
                 'comment'=> $comment->getComment(),
                 'date' => $comment->getDate()->format('Y-m-d H:i:s'),
                 'author' => [

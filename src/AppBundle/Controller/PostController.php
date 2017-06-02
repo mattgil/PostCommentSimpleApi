@@ -32,8 +32,7 @@ class PostController extends Controller
     {
         $posts = $this->getDoctrine()->getRepository('AppBundle:Post')->findPostToListSortByDateDESC();
 
-            return new JsonResponse(['posts' => $posts]);
-
+        return new JsonResponse(['posts' => $posts]);
     }
 
     /**
@@ -42,7 +41,7 @@ class PostController extends Controller
     public function getPostDetailAction($post_id)
     {
         $post = $this->getDoctrine()->getRepository("AppBundle:Post")->findPostDetails($post_id);
-        if( !$post ){
+        if (!$post) {
             return new JsonResponse(['message'=> 'post does not exists'], Response::HTTP_NOT_FOUND);
         } else {
             return new JsonResponse(['post' => $post]);
@@ -78,10 +77,10 @@ class PostController extends Controller
     public function deletePost($post_id, UserInterface $user)
     {
         $post = $this->getDoctrine()->getRepository("AppBundle:Post")->find($post_id);
-        if(!$post){
+        if (!$post) {
             return new JsonResponse(['message'=> 'post does not exists'], Response::HTTP_NOT_FOUND);
         }
-        if( $post->getUser() !== $user ){
+        if ($post->getUser() !== $user) {
             return new JsonResponse(['message'=> 'can not delete post'], Response::HTTP_UNAUTHORIZED);
         }
         $em = $this->get('doctrine.orm.entity_manager');
