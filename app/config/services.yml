@@ -37,3 +37,9 @@ services:
         class: AppBundle\EventListener\ContentTypeRequestListener
         tags:
           - { name: kernel.event_listener, event: kernel.request }
+
+    app.validator_constraints.unique_user_email_validator:
+        class: AppBundle\Validator\Constraints\UniqueUserEmailValidator
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: validator.constraint_validator }

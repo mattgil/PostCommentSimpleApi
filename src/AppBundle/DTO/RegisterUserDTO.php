@@ -9,6 +9,7 @@
 namespace AppBundle\DTO;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints as AppAssert;
 
 class RegisterUserDTO
 {
@@ -31,6 +32,7 @@ class RegisterUserDTO
     /**
      * @Assert\Email(message="email is not valid")
      * @Assert\NotBlank(message="email can not be blank")
+     * @AppAssert\UniqueUserEmail
      */
     public $email;
 }

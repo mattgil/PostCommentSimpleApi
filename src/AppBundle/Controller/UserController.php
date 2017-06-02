@@ -35,9 +35,6 @@ class UserController extends Controller
 
         if ($registerUserFrom->isValid()) {
             $em = $this->get('doctrine.orm.entity_manager');
-            if ($em->getRepository('AppBundle:User')->findBy(['email' => $registerUserDTO->email])) {
-                return new JsonResponse(['message' => 'email was used'], Response::HTTP_BAD_REQUEST);
-            }
             $user = new User(
                 $registerUserDTO->email,
                 $registerUserDTO->name,
