@@ -18,6 +18,9 @@ class ContentTypeRequestListener
     public function onKernelRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
+        if(!$request->getContent() || $request->getMethod() !== "POST"){
+            return;
+        }
         if ('json' ===  $request->getContentType()) {
             $data = json_decode($request->getContent(), true);
             if (!$data) {
