@@ -31,6 +31,6 @@ class CommentForm extends AbstractType
 
     public function getBlockPrefix()
     {
-        return "add_comment";
+        return "";
     }
 }

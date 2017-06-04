@@ -32,6 +32,6 @@ class PostForm extends AbstractType
 
     public function getBlockPrefix()
     {
-        return "add_post";
+        return "";
     }
 }

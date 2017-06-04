@@ -35,6 +35,6 @@ class RegisterUserForm extends AbstractType
 
     public function getBlockPrefix()
     {
-        return "register_user";
+        return "";
     }
 }
