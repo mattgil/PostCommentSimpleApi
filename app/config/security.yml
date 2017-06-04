@@ -15,6 +15,9 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        doc:
+            pattern: ^/doc
+            anonymous: true
         main:
             anonymous: ~
             guard:
