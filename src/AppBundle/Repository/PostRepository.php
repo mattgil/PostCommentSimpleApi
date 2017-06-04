@@ -51,6 +51,7 @@ class PostRepository extends EntityRepository
     private function preparePostListView(Post $post): array
     {
         return [
+            'id' => $post->getId(),
             'title' => $post->getTitle(),
             'description' => $post->getDescription(),
             'date' => $post->getDate()->format('Y-m-d H:i:s'),
