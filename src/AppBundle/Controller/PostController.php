@@ -14,6 +14,7 @@ use AppBundle\Entity\Comment;
 use AppBundle\Entity\Post;
 use AppBundle\Form\CommentForm;
 use AppBundle\Form\PostForm;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,6 +28,22 @@ class PostController extends Controller
 
     /**
      * @Route("/posts", methods={"GET"})
+     * @ApiDoc(
+     *     section="post",
+     *     description="returns list of post sorted by date",
+     *     headers={
+     *          {
+     *              "name"="X-AUTH",
+     *              "description"="authorisation data in email:password format"
+     *          }
+     *     },
+     *     statusCodes={
+                200="return list of posts",
+     *          403="credentials not valid",
+     *          401={"authorization header X-AUTH is missing "," value is not in email:password format"}
+     *     }
+     *
+     * )
      */
     public function getPostsAction()
     {
@@ -37,6 +54,24 @@ class PostController extends Controller
 
     /**
      * @Route("/posts/{post_id}", requirements={"post_id"="\d+"}, methods={"GET"})
+     * @ApiDoc(
+     *     section="post",
+     *     description="returns post detail with comments",
+     *     headers={
+     *          {
+     *              "name"="X-AUTH",
+     *              "description"="authorisation data in email:password format",
+     *
+     *          }
+     *     },
+     *     statusCodes={
+     *          200="return post details",
+     *          403="credentials not valid",
+     *          401={"authorization header X-AUTH is missing "," value is not in email:password format"},
+     *          404="post of given id was not found"
+     *     }
+     *
+     * )
      */
     public function getPostDetailAction($post_id)
     {
@@ -49,7 +84,25 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/posts", methods={"PUT", "POST"})
+     * @Route("/posts", methods={"POST"})
+     * @ApiDoc(
+     *     section="post",
+     *     description="post creation method",
+     *     headers={
+     *          {
+     *              "name"="X-AUTH",
+     *              "description"="authorisation data in email:password format",
+     *
+     *          }
+     *     },
+     *     input="AppBundle\DTO\PostDTO",
+     *     statusCodes={
+     *          201="When post created",
+     *          403="credentials not valid",
+     *          401={"authorization header X-AUTH is missing "," value is not in email:password format"},
+     *          400={"when not valid json were passed "," validation errors occur "}
+     *     }
+     *)
      */
     public function createPostsAction(Request $request, UserInterface $user)
     {
@@ -73,6 +126,24 @@ class PostController extends Controller
 
     /**
      * @Route("/posts/{post_id}", requirements={"post_id"="\d+"}, methods={"DELETE"})
+     * @ApiDoc(
+     *     section="post",
+     *     description="deletes post",
+     *     headers={
+     *          {
+     *              "name"="X-AUTH",
+     *              "description"="authorisation data in email:password format",
+     *
+     *          }
+     *     },
+     *     statusCodes={
+     *          200="post deleted",
+     *          403={"credentials not valid "," user try delete post which not owns"},
+     *          401={"authorization header X-AUTH is missing "," value is not in email:password format"},
+     *          404="post of given id was not found"
+     *     }
+     *
+     * )
      */
     public function deletePost($post_id, UserInterface $user)
     {
@@ -90,7 +161,24 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/posts/{post_id}/comment", requirements={"post_id"="\d+"}, methods={"POST", "PUT"})
+     * @Route("/posts/{post_id}/comment", requirements={"post_id"="\d+"}, methods={"POST"})
+     * @ApiDoc(
+     *     section="post",
+     *     description="comment creation method",
+     *     headers={
+     *          {
+     *              "name"="X-AUTH",
+     *              "description"="authorisation data in email:password format",
+     *          }
+     *     },
+     *     input="AppBundle\DTO\CommentDTO",
+     *     statusCodes={
+     *          201="When comment created",
+     *          403="credentials not valid",
+     *          401={"authorization header X-AUTH is missing "," value is not in email:password format"},
+     *          400={"when not valid json were passed "," validation errors occur "}
+     *     }
+     *)
      */
     public function createCommentAction(Request $request, $post_id, UserInterface $user)
     {
@@ -106,7 +194,7 @@ class PostController extends Controller
             $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($comment);
             $em->flush();
-            return new JsonResponse(['message'=> 'Comment created']);
+            return new JsonResponse(['message'=> 'Comment created'], Response::HTTP_CREATED);
         } else {
             return $this->prepareValidationErrorResponse($commentFrom);
         }

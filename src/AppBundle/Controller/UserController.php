@@ -32,7 +32,7 @@ class UserController extends Controller
      *     input="AppBundle\DTO\RegisterUserDTO",
      *     statusCodes={
      *          201="When user created",
-     *          400="when not valid json were passed or validation errors occur "
+     *          400={"when not valid json were passed", "validation errors occur "}
      *     }
      *)
      * @Route("/register", methods={"POST"})
