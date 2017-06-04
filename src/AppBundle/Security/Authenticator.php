@@ -32,7 +32,13 @@ class Authenticator extends AbstractGuardAuthenticator
         if (!$credentials = $request->headers->get('X-AUTH')) {
             return null;
         }
-        list($email, $password) = explode(":", $credentials);
+        $credentials_array = explode(":", $credentials);
+
+        if(count($credentials_array) !== 2){
+            return null;
+        }
+
+        list($email, $password) = $credentials_array;
         return [
             'email' => $email,
             'password' => $password
