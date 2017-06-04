@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use AppBundle\DTO\RegisterUserDTO;
 use AppBundle\Entity\User;
 use AppBundle\Form\RegisterUserForm;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,7 +26,16 @@ class UserController extends Controller
     use ValidationErrorResponseTrait;
 
     /**
-     * @Route("/register", methods={"PUT","POST"})
+     * @ApiDoc(
+     *     section="user",
+     *     description="User registration method",
+     *     input="AppBundle\DTO\RegisterUserDTO",
+     *     statusCodes={
+     *          201="When user created",
+     *          400="when not valid json were passed or validation errors occur "
+     *     }
+     *)
+     * @Route("/register", methods={"POST"})
      */
     public function registerUserAction(Request $request)
     {
