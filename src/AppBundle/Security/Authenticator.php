@@ -34,7 +34,7 @@ class Authenticator extends AbstractGuardAuthenticator
         }
         $credentials_array = explode(":", $credentials);
 
-        if(count($credentials_array) !== 2){
+        if (count($credentials_array) !== 2) {
             return null;
         }
 
