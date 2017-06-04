@@ -66,6 +66,15 @@ class Post
     }
 
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    /**
      * @return User
      */
     public function getUser(): User
